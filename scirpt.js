@@ -7,10 +7,10 @@ document.getElementById('fetchButton').addEventListener('click', function() {
 
     fetch(`https://api.github.com/users/${username}/repos`)
         .then(response => {
-            if (response.status === 404) {
-                throw new Error('User not found');
-            }
+            // Check if the response is not OK
             if (!response.ok) {
+                // Show alert for user not found
+                alert('Please enter a valid GitHub username.');
                 throw new Error('Error fetching repositories');
             }
             return response.json();
@@ -29,7 +29,6 @@ document.getElementById('fetchButton').addEventListener('click', function() {
                 repoDiv.className = 'repo';
                 repoDiv.innerHTML = `
                     <strong><a href="${repo.html_url}" target="_blank">${repo.name}</a></strong>
-                    
                 `;
                 repoList.appendChild(repoDiv);
             });
@@ -38,4 +37,3 @@ document.getElementById('fetchButton').addEventListener('click', function() {
             document.getElementById('repoList').innerHTML = `<p>${error.message}</p>`;
         });
 });
-
